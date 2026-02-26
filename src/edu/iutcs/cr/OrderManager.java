@@ -7,7 +7,6 @@ import edu.iutcs.cr.util.InputHelper;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Scanner;
 import java.util.function.Predicate;
 
 /**
@@ -28,11 +27,10 @@ public class OrderManager {
 
     /** Runs the cart sub-workflow until the user confirms or cancels. */
     public void createOrder() {
-        Scanner scanner = new Scanner(System.in);
         ShoppingCart cart = new ShoppingCart();
 
         while (true) {
-            int selectedOperation = selectCartOperation(scanner);
+            int selectedOperation = selectCartOperation();
             if (!handleCartOperation(selectedOperation, cart)) {
                 return;
             }
@@ -42,7 +40,7 @@ public class OrderManager {
     /**
      * Displays the cart sub-menu and returns a validated selection.
      */
-    private int selectCartOperation(Scanner scanner) {
+    private int selectCartOperation() {
         System.out.println("Please enter the type of operation: [1-5]");
         System.out.println("1. Add new vehicle to cart");
         System.out.println("2. Remove vehicle from cart");
@@ -51,14 +49,10 @@ public class OrderManager {
         System.out.println();
         System.out.println("5. Return to main menu");
 
-        int selectedOperation = scanner.nextInt();
-
-        while (selectedOperation < 1 || selectedOperation > 5) {
-            System.out.print("Please select a valid operation: ");
-            selectedOperation = scanner.nextInt();
-        }
-
-        return selectedOperation;
+        return InputHelper.readIntInRange(
+                "Enter your choice: ",
+                "Please select a valid operation: ",
+                1, 5);
     }
 
     /**
@@ -80,26 +74,20 @@ public class OrderManager {
     }
 
     private void createInvoice(ShoppingCart cart) {
-        Scanner scanner = new Scanner(System.in);
-
         Buyer buyer = null;
         Seller seller = null;
 
         do {
-            System.out.print("Enter buyer id: ");
-            String buyerId = scanner.nextLine();
+            String buyerId = InputHelper.readLine("Enter buyer id: ");
             buyer = database.findBuyerById(buyerId);
-
             if (buyer == null) {
                 System.out.println("Buyer not found. Try again!");
             }
         } while (buyer == null);
 
         do {
-            System.out.print("Enter seller id: ");
-            String sellerId = scanner.nextLine();
+            String sellerId = InputHelper.readLine("Enter seller id: ");
             seller = database.findSellerById(sellerId);
-
             if (seller == null) {
                 System.out.println("Seller not found. Try again!");
             }

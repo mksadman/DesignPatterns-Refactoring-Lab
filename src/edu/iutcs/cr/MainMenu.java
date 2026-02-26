@@ -1,6 +1,6 @@
 package edu.iutcs.cr;
 
-import java.util.Scanner;
+import edu.iutcs.cr.util.InputHelper;
 
 /**
  * @author Raian Rahman
@@ -26,19 +26,10 @@ public class MainMenu {
     }
 
     public int showAndSelectOperation() {
-        Scanner scanner = new Scanner(System.in);
         showMenu();
-        int selectedOperation = -1;
-
-        while(selectedOperation<1 || selectedOperation>9) {
-            System.out.print("Enter your choice: ");
-            selectedOperation = scanner.nextInt();
-
-            if(selectedOperation<1 || selectedOperation>9) {
-                System.out.print("Enter a valid operation: ");
-            }
-        }
-
-        return selectedOperation;
+        return InputHelper.readIntInRange(
+                "Enter your choice: ",
+                "Enter a valid operation: ",
+                1, 9);
     }
 }

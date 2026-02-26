@@ -1,8 +1,7 @@
 package edu.iutcs.cr.vehicles;
 
 import edu.iutcs.cr.system.SystemDatabase;
-
-import java.util.Scanner;
+import edu.iutcs.cr.util.InputHelper;
 
 /**
  * Responsible solely for prompting the user to select a vehicle type,
@@ -23,22 +22,15 @@ public class VehicleCreator {
 
     /** Guides the user through selecting and creating a new vehicle. */
     public void addVehicle() {
-        Scanner scanner = new Scanner(System.in);
-
         System.out.println("Please enter the type of vehicle [1-" + VehicleType.values().length + "]: ");
         for (VehicleType type : VehicleType.values()) {
             System.out.println(type.getCode() + ". " + type.getLabel());
         }
 
-        int vehicleType = -1;
-        while (vehicleType < 1 || vehicleType > VehicleType.values().length) {
-            System.out.print("Enter your choice: ");
-            vehicleType = scanner.nextInt();
-
-            if (vehicleType < 1 || vehicleType > VehicleType.values().length) {
-                System.out.println("Enter a valid vehicle type!");
-            }
-        }
+        int vehicleType = InputHelper.readIntInRange(
+                "Enter your choice: ",
+                "Enter a valid vehicle type!\nEnter your choice: ",
+                1, VehicleType.values().length);
 
         Vehicle newItem = VehicleType.fromCode(vehicleType).create();
         database.getVehicles().add(newItem);

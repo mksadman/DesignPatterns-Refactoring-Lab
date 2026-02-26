@@ -4,11 +4,11 @@ import edu.iutcs.cr.persons.Buyer;
 import edu.iutcs.cr.persons.Seller;
 import edu.iutcs.cr.system.DatabasePrinter;
 import edu.iutcs.cr.system.SystemDatabase;
+import edu.iutcs.cr.util.InputHelper;
 import edu.iutcs.cr.vehicles.VehicleCreator;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 /**
  * @author Raian Rahman
@@ -95,13 +95,9 @@ public class SystemFlowRunner {
     }
 
     private static void promptToViewMainMenu() {
-        System.out.print("\n\nEnter 0 to view main menu: ");
-
-        Scanner scanner = new Scanner(System.in);
-        int val = -1;
-
+        int val;
         do {
-            val = scanner.nextInt();
+            val = InputHelper.readInt("\n\nEnter 0 to view main menu: ");
         } while (val != 0);
     }
 

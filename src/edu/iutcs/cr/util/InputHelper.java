@@ -53,4 +53,28 @@ public class InputHelper {
         SCANNER.nextLine(); // consume trailing newline
         return value;
     }
+
+    /**
+     * Prints {@code prompt} and returns the next full line entered by the user.
+     */
+    public static String readLine(String prompt) {
+        System.out.print(prompt);
+        return SCANNER.nextLine();
+    }
+
+    /**
+     * Displays {@code prompt}, reads an int, and re-prompts with {@code retryPrompt}
+     * until the value is within [{@code min}, {@code max}] inclusive.
+     */
+    public static int readIntInRange(String prompt, String retryPrompt, int min, int max) {
+        System.out.print(prompt);
+        int value = SCANNER.nextInt();
+        SCANNER.nextLine();
+        while (value < min || value > max) {
+            System.out.print(retryPrompt);
+            value = SCANNER.nextInt();
+            SCANNER.nextLine();
+        }
+        return value;
+    }
 }
