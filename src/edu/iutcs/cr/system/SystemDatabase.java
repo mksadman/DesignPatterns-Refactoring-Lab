@@ -7,7 +7,6 @@ import edu.iutcs.cr.vehicles.Vehicle;
 
 import java.io.Serializable;
 import java.util.Set;
-import java.util.function.Consumer;
 
 import static java.util.Objects.isNull;
 
@@ -66,16 +65,6 @@ public class SystemDatabase implements Serializable {
         return invoices;
     }
 
-    private <T> void showCollection(Set<T> collection, String emptyMessage, Consumer<T> printer) {
-        if (collection.isEmpty()) {
-            System.out.println(emptyMessage);
-            return;
-        }
-        for (T item : collection) {
-            printer.accept(item);
-        }
-    }
-
     private <T> T findInSet(Set<T> collection, T key) {
         for (T item : collection) {
             if (item.equals(key)) {
@@ -83,28 +72,6 @@ public class SystemDatabase implements Serializable {
             }
         }
         return null;
-    }
-
-    public void showInventory() {
-        showCollection(vehicles, "No vehicles is present in system",
-                vehicle -> System.out.println(vehicle.toString()));
-    }
-
-    public void showBuyerList() {
-        showCollection(buyers, "No buyer is present in system",
-                buyer -> System.out.println(buyer.toString()));
-    }
-
-    public void showSellerList() {
-        showCollection(sellers, "No seller is present in system",
-                seller -> System.out.println(seller.toString()));
-    }
-
-    public void showInvoices() {
-        showCollection(invoices, "No invoice found in system", invoice -> {
-            invoice.printInvoice();
-            System.out.println("\n\n\n");
-        });
     }
 
     public Vehicle findVehicleByRegistrationNumber(String registrationNumber) {
