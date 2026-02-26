@@ -16,8 +16,4 @@ public class Seller extends Person {
         super(id);
     }
 
-    @Override
-    public String toString() {
-        return super.toString();
-    }
 }
