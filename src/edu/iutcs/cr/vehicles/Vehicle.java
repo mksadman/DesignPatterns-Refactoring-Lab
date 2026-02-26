@@ -14,7 +14,7 @@ public class Vehicle implements Serializable {
 
     private String make;
     private String model;
-    private String year;
+    private int year;
     private double price;
     private boolean available;
     private String registrationNumber;
@@ -74,17 +74,17 @@ public class Vehicle implements Serializable {
         this.model = model;
     }
 
-    public String getYear() {
+    public int getYear() {
         return year;
     }
 
     /** Prompts the user and assigns the year. */
     public void promptYear() {
-        setYear(InputHelper.readNonBlank("Enter year: ", "Year is mandatory!"));
+        setYear(InputHelper.readInt("Enter year: "));
     }
 
     /** Pure setter — assigns year without any I/O. */
-    public void setYear(String year) {
+    public void setYear(int year) {
         this.year = year;
     }
 
@@ -114,7 +114,7 @@ public class Vehicle implements Serializable {
     public String toString() {
         return "make='" + make + '\'' +
                 ", model='" + model + '\'' +
-                ", year='" + year + '\'' +
+                ", year=" + year +
                 ", price=" + price +
                 ", available=" + available +
                 ", registrationNumber='" + registrationNumber + '\'';
