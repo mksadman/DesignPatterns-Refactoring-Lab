@@ -1,14 +1,11 @@
 package edu.iutcs.cr;
 
-import edu.iutcs.cr.system.SystemDatabase;
 import edu.iutcs.cr.vehicles.Vehicle;
 import edu.iutcs.cr.util.InputHelper;
 
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-
-import static java.util.Objects.isNull;
 
 /**
  * @author Raian Rahman
@@ -19,29 +16,28 @@ public class ShoppingCart implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private final Set<Vehicle> vehicles;
-    private final SystemDatabase database;
 
     public ShoppingCart() {
         this.vehicles = new HashSet<>();
-        database = SystemDatabase.getInstance();
     }
 
     public Set<Vehicle> getVehicles() {
         return this.vehicles;
     }
 
-    public void addItem() {
-        String registrationNumber = InputHelper.readNonBlank(
-                "Enter registration number of vehicle: ", "Registration number is mandatory!");
-
-        Vehicle vehicle = database.findVehicleByRegistrationNumber(registrationNumber);
-
-        if (isNull(vehicle) || !vehicle.isAvailable()) {
-            System.out.println("Vehicle not available");
-            return;
-        }
-
+    /**
+     * Adds a pre-validated vehicle to the cart.
+     * The caller is responsible for obtaining and validating the {@link Vehicle} instance.
+     */
+    public void addItem(Vehicle vehicle) {
         vehicles.add(vehicle);
+    }
+
+    /** Marks every vehicle in the cart as unavailable after a confirmed purchase. */
+    public void markVehiclesUnavailable() {
+        for (Vehicle vehicle : vehicles) {
+            vehicle.setUnavailable();
+        }
     }
 
     public void removeItem() {

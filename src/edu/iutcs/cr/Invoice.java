@@ -33,7 +33,7 @@ public class Invoice implements Serializable {
         this.seller = seller;
         this.shoppingCart = shoppingCart;
         this.isPaid = isPaid;
-        markCarAsUnavailable();
+        shoppingCart.markVehiclesUnavailable();
         this.dateTime = LocalDateTime.now();
     }
 
@@ -43,12 +43,13 @@ public class Invoice implements Serializable {
         System.out.println("Payment Status: " + (isPaid ? "Paid" : "Due"));
         System.out.println("Date: " + dateTime.toLocalDate() + " Time: " + dateTime.toLocalTime());
 
-        this.shoppingCart.viewCart();
-    }
-
-    private void markCarAsUnavailable() {
-        for(Vehicle vehicle: shoppingCart.getVehicles()) {
-            vehicle.setUnavailable();
+        System.out.println("\n\nShopping cart\n\n");
+        if (shoppingCart.getVehicles().isEmpty()) {
+            System.out.println("Cart is empty");
+        } else {
+            for (Vehicle vehicle : shoppingCart.getVehicles()) {
+                System.out.println(vehicle.toString());
+            }
         }
     }
 }

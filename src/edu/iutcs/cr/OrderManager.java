@@ -3,6 +3,7 @@ package edu.iutcs.cr;
 import edu.iutcs.cr.persons.Buyer;
 import edu.iutcs.cr.persons.Seller;
 import edu.iutcs.cr.system.SystemDatabase;
+import edu.iutcs.cr.vehicles.Vehicle;
 import edu.iutcs.cr.util.InputHelper;
 
 import java.util.LinkedHashMap;
@@ -63,7 +64,17 @@ public class OrderManager {
      */
     private boolean handleCartOperation(int selectedOperation, ShoppingCart cart) {
         Map<Integer, Predicate<ShoppingCart>> operations = new LinkedHashMap<>();
-        operations.put(1, c -> { c.addItem();              return true;  });
+        operations.put(1, c -> {
+            String reg = InputHelper.readNonBlank(
+                    "Enter registration number of vehicle: ", "Registration number is mandatory!");
+            Vehicle vehicle = database.findVehicleByRegistrationNumber(reg);
+            if (vehicle == null || !vehicle.isAvailable()) {
+                System.out.println("Vehicle not available");
+                return true;
+            }
+            c.addItem(vehicle);
+            return true;
+        });
         operations.put(2, c -> { c.removeItem();           return true;  });
         operations.put(3, c -> { c.viewCart();             return true;  });
         operations.put(4, c -> { createInvoice(c);         return false; });
