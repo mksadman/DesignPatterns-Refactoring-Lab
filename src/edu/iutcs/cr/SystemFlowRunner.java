@@ -9,7 +9,6 @@ import edu.iutcs.cr.vehicles.VehicleCreator;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-
 /**
  * @author Raian Rahman
  * @since 4/19/2024
@@ -28,9 +27,9 @@ public class SystemFlowRunner {
         while (true) {
             System.out.println("\n\n\n");
 
-            int selectedOperation = mainMenu.showAndSelectOperation();
+            MainMenuOperation selectedOperation = mainMenu.showAndSelectOperation();
 
-            if (selectedOperation == 9) {
+            if (selectedOperation == MainMenuOperation.SAVE_AND_EXIT) {
                 database.saveSystem();
                 return;
             }
@@ -44,45 +43,45 @@ public class SystemFlowRunner {
      * using a Command map, eliminating the Long if-else/Switch Chain smell.
      * Adding a new operation only requires inserting a new map entry here.
      */
-    private static void handleMainMenuOperation(int selectedOperation, SystemDatabase database) {
+    private static void handleMainMenuOperation(MainMenuOperation selectedOperation, SystemDatabase database) {
         DatabasePrinter printer = new DatabasePrinter(database);
 
-        Map<Integer, Runnable> operations = new LinkedHashMap<>();
-        operations.put(1, () -> {
+        Map<MainMenuOperation, Runnable> operations = new LinkedHashMap<>();
+        operations.put(MainMenuOperation.ADD_SELLER, () -> {
             System.out.println("\n\n\nAdd new seller");
             database.getSellers().add(new Seller());
             promptToViewMainMenu();
         });
-        operations.put(2, () -> {
+        operations.put(MainMenuOperation.ADD_CUSTOMER, () -> {
             System.out.println("\n\n\nAdd new customer");
             database.getBuyers().add(new Buyer());
             promptToViewMainMenu();
         });
-        operations.put(3, () -> {
+        operations.put(MainMenuOperation.ADD_VEHICLE, () -> {
             System.out.println("\n\n\nAdd new vehicle");
             new VehicleCreator(database).addVehicle();
             promptToViewMainMenu();
         });
-        operations.put(4, () -> {
+        operations.put(MainMenuOperation.VIEW_INVENTORY, () -> {
             System.out.println("\n\n\nInventory list");
             printer.showInventory();
             promptToViewMainMenu();
         });
-        operations.put(5, () -> {
+        operations.put(MainMenuOperation.VIEW_SELLERS, () -> {
             System.out.println("\n\n\nSeller's list");
             printer.showSellerList();
             promptToViewMainMenu();
         });
-        operations.put(6, () -> {
+        operations.put(MainMenuOperation.VIEW_BUYERS, () -> {
             System.out.println("\n\n\nCustomer's list");
             printer.showBuyerList();
             promptToViewMainMenu();
         });
-        operations.put(7, () -> {
+        operations.put(MainMenuOperation.ADD_ORDER, () -> {
             System.out.println("\n\n\nCreate order");
             new OrderManager(database).createOrder();
         });
-        operations.put(8, () -> {
+        operations.put(MainMenuOperation.VIEW_INVOICES, () -> {
             System.out.println("\n\n\nInvoice list");
             printer.showInvoices();
             promptToViewMainMenu();

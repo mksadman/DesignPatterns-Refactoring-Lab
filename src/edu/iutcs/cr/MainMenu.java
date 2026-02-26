@@ -9,27 +9,25 @@ import edu.iutcs.cr.util.InputHelper;
 public class MainMenu {
 
     private void showMenu() {
-        System.out.println("Please enter the type of vehicle [1-9]: ");
-        System.out.println("1. Add new seller");
-        System.out.println("2. Add new customer");
-        System.out.println("3. Add car");
-        System.out.println("4. View inventory");
-        System.out.println("5. View seller list");
-        System.out.println("6. View buyer list");
+        System.out.println("Please select an operation [" +
+                MainMenuOperation.minCode() + "-" + MainMenuOperation.maxCode() + "]: ");
 
-        System.out.println();
-        System.out.println("7. Add new order");
-        System.out.println("8. View all invoices");
-
-        System.out.println();
-        System.out.println("9. Save System and Exit");
+        for (MainMenuOperation op : MainMenuOperation.values()) {
+            // Blank line before the ordering group and the exit option
+            if (op == MainMenuOperation.ADD_ORDER || op == MainMenuOperation.SAVE_AND_EXIT) {
+                System.out.println();
+            }
+            System.out.println(op.getCode() + ". " + op.getLabel());
+        }
     }
 
-    public int showAndSelectOperation() {
+    public MainMenuOperation showAndSelectOperation() {
         showMenu();
-        return InputHelper.readIntInRange(
+        int code = InputHelper.readIntInRange(
                 "Enter your choice: ",
                 "Enter a valid operation: ",
-                1, 9);
+                MainMenuOperation.minCode(),
+                MainMenuOperation.maxCode());
+        return MainMenuOperation.fromCode(code);
     }
 }
