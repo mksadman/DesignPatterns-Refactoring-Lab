@@ -4,7 +4,10 @@ import edu.iutcs.cr.persons.Buyer;
 import edu.iutcs.cr.persons.Seller;
 import edu.iutcs.cr.system.SystemDatabase;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.function.Predicate;
 
 /**
  * Responsible for managing the order workflow: building a shopping cart,
@@ -58,27 +61,21 @@ public class OrderManager {
     }
 
     /**
-     * Executes a validated cart sub-menu selection.
-     *
-     * @return {@code true} to continue the cart loop, {@code false} to exit it
+     * Executes a validated cart sub-menu selection using a Command map,
+     * eliminating the switch chain smell.
+     * The predicate returns {@code true} to continue the cart loop,
+     * {@code false} to exit it.
      */
     private boolean handleCartOperation(int selectedOperation, ShoppingCart cart) {
-        switch (selectedOperation) {
-            case 1:
-                cart.addItem();
-                return true;
-            case 2:
-                cart.removeItem();
-                return true;
-            case 3:
-                cart.viewCart();
-                return true;
-            case 4:
-                createInvoice(cart);
-                return false;
-            default:
-                return false;
-        }
+        Map<Integer, Predicate<ShoppingCart>> operations = new LinkedHashMap<>();
+        operations.put(1, c -> { c.addItem();              return true;  });
+        operations.put(2, c -> { c.removeItem();           return true;  });
+        operations.put(3, c -> { c.viewCart();             return true;  });
+        operations.put(4, c -> { createInvoice(c);         return false; });
+        operations.put(5, c ->                             false         );
+
+        Predicate<ShoppingCart> action = operations.get(selectedOperation);
+        return action != null && action.test(cart);
     }
 
     private void createInvoice(ShoppingCart cart) {

@@ -25,44 +25,22 @@ public class VehicleCreator {
     public void addVehicle() {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Please enter the type of vehicle [1-5]: ");
-        System.out.println("1. Bus");
-        System.out.println("2. Car");
-        System.out.println("3. Hatchback");
-        System.out.println("4. Sedan");
-        System.out.println("5. SUV");
+        System.out.println("Please enter the type of vehicle [1-" + VehicleType.values().length + "]: ");
+        for (VehicleType type : VehicleType.values()) {
+            System.out.println(type.getCode() + ". " + type.getLabel());
+        }
 
         int vehicleType = -1;
-        while (vehicleType < 1 || vehicleType > 5) {
+        while (vehicleType < 1 || vehicleType > VehicleType.values().length) {
             System.out.print("Enter your choice: ");
             vehicleType = scanner.nextInt();
 
-            if (vehicleType < 1 || vehicleType > 5) {
+            if (vehicleType < 1 || vehicleType > VehicleType.values().length) {
                 System.out.println("Enter a valid vehicle type!");
             }
         }
 
-        Vehicle newItem = createVehicle(vehicleType);
+        Vehicle newItem = VehicleType.fromCode(vehicleType).create();
         database.getVehicles().add(newItem);
-    }
-
-    private Vehicle createVehicle(int vehicleType) {
-        switch (vehicleType) {
-            case 1:
-                System.out.println("\n\nCreate new bus");
-                return new Bus();
-            case 2:
-                System.out.println("\n\nCreate new car");
-                return new Car();
-            case 3:
-                System.out.println("\n\nCreate new hatchback");
-                return new Hatchback();
-            case 4:
-                System.out.println("\n\nCreate new sedan");
-                return new Sedan();
-            default:
-                System.out.println("\n\nCreate new SUV");
-                return new SUV();
-        }
     }
 }

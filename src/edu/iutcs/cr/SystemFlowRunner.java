@@ -6,6 +6,8 @@ import edu.iutcs.cr.system.DatabasePrinter;
 import edu.iutcs.cr.system.SystemDatabase;
 import edu.iutcs.cr.vehicles.VehicleCreator;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -38,51 +40,57 @@ public class SystemFlowRunner {
     }
 
     /**
-     * Dispatches a validated main-menu selection to the appropriate handler.
-     * Extracted from {@link #run()} to reduce its length (Long Method smell).
+     * Dispatches a validated main-menu selection to the appropriate handler
+     * using a Command map, eliminating the Long if-else/Switch Chain smell.
+     * Adding a new operation only requires inserting a new map entry here.
      */
     private static void handleMainMenuOperation(int selectedOperation, SystemDatabase database) {
         DatabasePrinter printer = new DatabasePrinter(database);
-        switch (selectedOperation) {
-            case 1:
-                System.out.println("\n\n\nAdd new seller");
-                database.getSellers().add(new Seller());
-                promptToViewMainMenu();
-                break;
-            case 2:
-                System.out.println("\n\n\nAdd new customer");
-                database.getBuyers().add(new Buyer());
-                promptToViewMainMenu();
-                break;
-            case 3:
-                System.out.println("\n\n\nAdd new vehicle");
-                new VehicleCreator(database).addVehicle();
-                promptToViewMainMenu();
-                break;
-            case 4:
-                System.out.println("\n\n\nInventory list");
-                printer.showInventory();
-                promptToViewMainMenu();
-                break;
-            case 5:
-                System.out.println("\n\n\nSeller's list");
-                printer.showSellerList();
-                promptToViewMainMenu();
-                break;
-            case 6:
-                System.out.println("\n\n\nCustomer's list");
-                printer.showBuyerList();
-                promptToViewMainMenu();
-                break;
-            case 7:
-                System.out.println("\n\n\nCreate order");
-                new OrderManager(database).createOrder();
-                break;
-            case 8:
-                System.out.println("\n\n\nInvoice list");
-                printer.showInvoices();
-                promptToViewMainMenu();
-                break;
+
+        Map<Integer, Runnable> operations = new LinkedHashMap<>();
+        operations.put(1, () -> {
+            System.out.println("\n\n\nAdd new seller");
+            database.getSellers().add(new Seller());
+            promptToViewMainMenu();
+        });
+        operations.put(2, () -> {
+            System.out.println("\n\n\nAdd new customer");
+            database.getBuyers().add(new Buyer());
+            promptToViewMainMenu();
+        });
+        operations.put(3, () -> {
+            System.out.println("\n\n\nAdd new vehicle");
+            new VehicleCreator(database).addVehicle();
+            promptToViewMainMenu();
+        });
+        operations.put(4, () -> {
+            System.out.println("\n\n\nInventory list");
+            printer.showInventory();
+            promptToViewMainMenu();
+        });
+        operations.put(5, () -> {
+            System.out.println("\n\n\nSeller's list");
+            printer.showSellerList();
+            promptToViewMainMenu();
+        });
+        operations.put(6, () -> {
+            System.out.println("\n\n\nCustomer's list");
+            printer.showBuyerList();
+            promptToViewMainMenu();
+        });
+        operations.put(7, () -> {
+            System.out.println("\n\n\nCreate order");
+            new OrderManager(database).createOrder();
+        });
+        operations.put(8, () -> {
+            System.out.println("\n\n\nInvoice list");
+            printer.showInvoices();
+            promptToViewMainMenu();
+        });
+
+        Runnable action = operations.get(selectedOperation);
+        if (action != null) {
+            action.run();
         }
     }
 
