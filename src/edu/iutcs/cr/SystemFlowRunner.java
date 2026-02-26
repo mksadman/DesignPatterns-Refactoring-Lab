@@ -32,38 +32,55 @@ public class SystemFlowRunner {
                 return;
             }
 
-            if (selectedOperation == 1) {
+            handleMainMenuOperation(selectedOperation, database);
+        }
+    }
+
+    /**
+     * Dispatches a validated main-menu selection to the appropriate handler.
+     * Extracted from {@link #run()} to reduce its length (Long Method smell).
+     */
+    private static void handleMainMenuOperation(int selectedOperation, SystemDatabase database) {
+        switch (selectedOperation) {
+            case 1:
                 System.out.println("\n\n\nAdd new seller");
                 database.getSellers().add(new Seller());
                 promptToViewMainMenu();
-            } else if (selectedOperation == 2) {
+                break;
+            case 2:
                 System.out.println("\n\n\nAdd new customer");
                 database.getBuyers().add(new Buyer());
                 promptToViewMainMenu();
-            } else if (selectedOperation == 3) {
+                break;
+            case 3:
                 System.out.println("\n\n\nAdd new vehicle");
                 addCar();
                 promptToViewMainMenu();
-            } else if (selectedOperation == 4) {
+                break;
+            case 4:
                 System.out.println("\n\n\nInventory list");
                 database.showInventory();
                 promptToViewMainMenu();
-            } else if (selectedOperation == 5) {
+                break;
+            case 5:
                 System.out.println("\n\n\nSeller's list");
                 database.showSellerList();
                 promptToViewMainMenu();
-            } else if (selectedOperation == 6) {
+                break;
+            case 6:
                 System.out.println("\n\n\nCustomer's list");
                 database.showBuyerList();
                 promptToViewMainMenu();
-            } else if (selectedOperation == 7) {
+                break;
+            case 7:
                 System.out.println("\n\n\nCreate order");
                 createOrder();
-            } else if(selectedOperation==8) {
+                break;
+            case 8:
                 System.out.println("\n\n\nInvoice list");
                 database.showInvoices();
                 promptToViewMainMenu();
-            }
+                break;
         }
     }
 
@@ -123,39 +140,61 @@ public class SystemFlowRunner {
 
     private static void createOrder() {
         Scanner scanner = new Scanner(System.in);
-        SystemDatabase systemDatabase = SystemDatabase.getInstance();
         ShoppingCart cart = new ShoppingCart();
 
         while (true) {
-            int selectedOperation = -1;
+            int selectedOperation = selectCartOperation(scanner);
+            if (!handleCartOperation(selectedOperation, cart)) {
+                return;
+            }
+        }
+    }
 
-            System.out.println("Please enter the type of operation: [1-5]");
-            System.out.println("1. Add new vehicle to cart");
-            System.out.println("2. Remove vehicle from cart");
-            System.out.println("3. View cart");
-            System.out.println("4. Confirm purchase");
-            System.out.println();
-            System.out.println("5. Return to main menu");
+    /**
+     * Displays the cart sub-menu and returns a validated selection.
+     * Extracted from {@link #createOrder()} to reduce its length (Long Method smell).
+     */
+    private static int selectCartOperation(Scanner scanner) {
+        System.out.println("Please enter the type of operation: [1-5]");
+        System.out.println("1. Add new vehicle to cart");
+        System.out.println("2. Remove vehicle from cart");
+        System.out.println("3. View cart");
+        System.out.println("4. Confirm purchase");
+        System.out.println();
+        System.out.println("5. Return to main menu");
 
+        int selectedOperation = scanner.nextInt();
+
+        while (selectedOperation < 1 || selectedOperation > 5) {
+            System.out.print("Please select a valid operation: ");
             selectedOperation = scanner.nextInt();
+        }
 
-            while (selectedOperation < 1 || selectedOperation > 5) {
-                System.out.print("Please select a valid operation: ");
-                selectedOperation = scanner.nextInt();
-            }
+        return selectedOperation;
+    }
 
-            if (selectedOperation == 1) {
+    /**
+     * Executes a validated cart sub-menu selection.
+     * Extracted from {@link #createOrder()} to reduce its length (Long Method smell).
+     *
+     * @return {@code true} to continue the cart loop, {@code false} to exit it
+     */
+    private static boolean handleCartOperation(int selectedOperation, ShoppingCart cart) {
+        switch (selectedOperation) {
+            case 1:
                 cart.addItem();
-            } else if (selectedOperation == 2) {
+                return true;
+            case 2:
                 cart.removeItem();
-            } else if (selectedOperation == 3) {
+                return true;
+            case 3:
                 cart.viewCart();
-            } else if (selectedOperation == 4) {
+                return true;
+            case 4:
                 createInvoice(cart);
-                return;
-            } else {
-                return;
-            }
+                return false;
+            default:
+                return false;
         }
     }
 
