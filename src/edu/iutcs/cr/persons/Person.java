@@ -2,7 +2,7 @@ package edu.iutcs.cr.persons;
 
 import java.io.Serializable;
 import java.util.Objects;
-import java.util.Scanner;
+import edu.iutcs.cr.util.InputHelper;
 
 /**
  * @author Raian Rahman
@@ -29,16 +29,7 @@ public class Person implements Serializable {
     }
 
     public void setName() {
-        Scanner scanner = new Scanner(System.in);
-
-        while (this.name == null || this.name.isBlank()) {
-            System.out.print("Enter name: ");
-            this.name = scanner.nextLine();
-
-            if (name == null || name.isBlank()) {
-                System.out.println("Name is mandatory!");
-            }
-        }
+        this.name = InputHelper.readNonBlank("Enter name: ", "Name is mandatory!");
     }
 
     public String getId() {
@@ -46,16 +37,7 @@ public class Person implements Serializable {
     }
 
     public void setId() {
-        Scanner scanner = new Scanner(System.in);
-
-        while (this.id == null || this.id.isBlank()) {
-            System.out.print("Enter id: ");
-            this.id = scanner.nextLine();
-
-            if (id == null || id.isBlank()) {
-                System.out.println("Id is mandatory!");
-            }
-        }
+        this.id = InputHelper.readNonBlank("Enter id: ", "Id is mandatory!");
     }
 
     public String getEmail() {
@@ -63,16 +45,7 @@ public class Person implements Serializable {
     }
 
     public void setEmail() {
-        Scanner scanner = new Scanner(System.in);
-
-        while (this.email == null || this.email.isBlank()) {
-            System.out.print("Enter email: ");
-            this.email = scanner.nextLine();
-
-            if (email == null || email.isBlank()) {
-                System.out.println("Email is mandatory!");
-            }
-        }
+        this.email = InputHelper.readNonBlank("Enter email: ", "Email is mandatory!");
     }
 
     @Override

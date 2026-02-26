@@ -7,6 +7,7 @@ import edu.iutcs.cr.vehicles.Vehicle;
 
 import java.io.Serializable;
 import java.util.Set;
+import java.util.function.Consumer;
 
 import static java.util.Objects.isNull;
 
@@ -65,84 +66,64 @@ public class SystemDatabase implements Serializable {
         return invoices;
     }
 
-    public void showInventory() {
-        if (vehicles.isEmpty()) {
-            System.out.println("No vehicles is present in system");
+    // -----------------------------------------------------------------------
+    // Generic helpers — eliminate duplicated show/find boilerplate
+    // -----------------------------------------------------------------------
+
+    private <T> void showCollection(Set<T> collection, String emptyMessage, Consumer<T> printer) {
+        if (collection.isEmpty()) {
+            System.out.println(emptyMessage);
             return;
         }
-
-        for (Vehicle vehicle : vehicles) {
-            System.out.println(vehicle.toString());
+        for (T item : collection) {
+            printer.accept(item);
         }
+    }
+
+    private <T> T findInSet(Set<T> collection, T key) {
+        for (T item : collection) {
+            if (item.equals(key)) {
+                return item;
+            }
+        }
+        return null;
+    }
+
+    // -----------------------------------------------------------------------
+    // Public API
+    // -----------------------------------------------------------------------
+
+    public void showInventory() {
+        showCollection(vehicles, "No vehicles is present in system",
+                vehicle -> System.out.println(vehicle.toString()));
     }
 
     public void showBuyerList() {
-        if (buyers.isEmpty()) {
-            System.out.println("No buyer is present in system");
-            return;
-        }
-
-        for (Buyer buyer : buyers) {
-            System.out.println(buyer.toString());
-        }
+        showCollection(buyers, "No buyer is present in system",
+                buyer -> System.out.println(buyer.toString()));
     }
 
     public void showSellerList() {
-        if (sellers.isEmpty()) {
-            System.out.println("No seller is present in system");
-            return;
-        }
-
-        for (Seller seller : sellers) {
-            System.out.println(seller.toString());
-        }
+        showCollection(sellers, "No seller is present in system",
+                seller -> System.out.println(seller.toString()));
     }
 
     public void showInvoices() {
-        if(invoices.isEmpty()) {
-            System.out.println("No invoice found in system");
-            return;
-        }
-
-        for(Invoice invoice: invoices) {
+        showCollection(invoices, "No invoice found in system", invoice -> {
             invoice.printInvoice();
             System.out.println("\n\n\n");
-        }
+        });
     }
 
     public Vehicle findVehicleByRegistrationNumber(String registrationNumber) {
-        Vehicle newVehicle = new Vehicle(registrationNumber);
-
-        for (Vehicle vehicle : vehicles) {
-            if (vehicle.equals(newVehicle)) {
-                return vehicle;
-            }
-        }
-
-        return null;
+        return findInSet(vehicles, new Vehicle(registrationNumber));
     }
 
     public Buyer findBuyerById(String id) {
-        Buyer newBuyer = new Buyer(id);
-
-        for (Buyer buyer : buyers) {
-            if (buyer.equals(newBuyer)) {
-                return buyer;
-            }
-        }
-
-        return null;
+        return findInSet(buyers, new Buyer(id));
     }
 
     public Seller findSellerById(String id) {
-        Seller newSeller = new Seller(id);
-
-        for (Seller seller : sellers) {
-            if (seller.equals(newSeller)) {
-                return seller;
-            }
-        }
-
-        return null;
+        return findInSet(sellers, new Seller(id));
     }
 }
