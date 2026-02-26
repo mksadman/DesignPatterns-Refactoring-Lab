@@ -14,11 +14,6 @@ import java.util.Set;
  * @since 4/19/2024
  */
 public class DataStore {
-
-    // -----------------------------------------------------------------------
-    // Generic helpers — eliminate duplicated serialisation boilerplate
-    // -----------------------------------------------------------------------
-
     private <T> void saveToFile(T data, String filename) {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename))) {
             out.writeObject(data);
@@ -36,10 +31,6 @@ public class DataStore {
             return defaultValue;
         }
     }
-
-    // -----------------------------------------------------------------------
-    // Public API
-    // -----------------------------------------------------------------------
 
     public void saveInvoices(Set<Invoice> invoices) {
         saveToFile(invoices, "invoices.txt");

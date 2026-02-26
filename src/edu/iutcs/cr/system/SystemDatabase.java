@@ -66,10 +66,6 @@ public class SystemDatabase implements Serializable {
         return invoices;
     }
 
-    // -----------------------------------------------------------------------
-    // Generic helpers — eliminate duplicated show/find boilerplate
-    // -----------------------------------------------------------------------
-
     private <T> void showCollection(Set<T> collection, String emptyMessage, Consumer<T> printer) {
         if (collection.isEmpty()) {
             System.out.println(emptyMessage);
@@ -88,10 +84,6 @@ public class SystemDatabase implements Serializable {
         }
         return null;
     }
-
-    // -----------------------------------------------------------------------
-    // Public API
-    // -----------------------------------------------------------------------
 
     public void showInventory() {
         showCollection(vehicles, "No vehicles is present in system",
