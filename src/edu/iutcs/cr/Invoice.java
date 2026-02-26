@@ -6,7 +6,6 @@ import edu.iutcs.cr.vehicles.Vehicle;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Scanner;
 
 /**
  * @author Raian Rahman
@@ -20,13 +19,20 @@ public class Invoice implements Serializable {
     private boolean isPaid;
     private final LocalDateTime dateTime;
 
-    public Invoice(Buyer buyer, Seller seller, ShoppingCart shoppingCart) {
+    /**
+     * Creates an invoice.
+     *
+     * @param isPaid whether payment has already been received — the caller
+     *               is responsible for reading this value from the user
+     *               (Constructor Does Real Work smell: I/O must not happen here)
+     */
+    public Invoice(Buyer buyer, Seller seller, ShoppingCart shoppingCart, boolean isPaid) {
         this.buyer = buyer;
         this.seller = seller;
         this.shoppingCart = shoppingCart;
-        takePayment();
+        this.isPaid = isPaid;
         markCarAsUnavailable();
-        dateTime = LocalDateTime.now();
+        this.dateTime = LocalDateTime.now();
     }
 
     public void printInvoice() {
@@ -36,13 +42,6 @@ public class Invoice implements Serializable {
         System.out.println("Date: " + dateTime.toLocalDate() + " Time: " + dateTime.toLocalTime());
 
         this.shoppingCart.viewCart();
-    }
-
-    public void takePayment() {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Is payment done (true/false): ");
-        this.isPaid = scanner.nextBoolean();
     }
 
     private void markCarAsUnavailable() {

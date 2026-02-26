@@ -3,6 +3,7 @@ package edu.iutcs.cr;
 import edu.iutcs.cr.persons.Buyer;
 import edu.iutcs.cr.persons.Seller;
 import edu.iutcs.cr.system.SystemDatabase;
+import edu.iutcs.cr.util.InputHelper;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -104,7 +105,8 @@ public class OrderManager {
             }
         } while (seller == null);
 
-        Invoice invoice = new Invoice(buyer, seller, cart);
+        boolean isPaid = InputHelper.readBoolean("Is payment done (true/false): ");
+        Invoice invoice = new Invoice(buyer, seller, cart, isPaid);
         invoice.printInvoice();
         database.getInvoices().add(invoice);
     }
