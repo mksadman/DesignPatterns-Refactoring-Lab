@@ -1,7 +1,7 @@
 package edu.iutcs.cr.vehicles;
 
 import java.io.Serializable;
-import java.util.Scanner;
+import edu.iutcs.cr.util.InputHelper;
 
 /**
  * @author Raian Rahman
@@ -13,17 +13,21 @@ public class Car extends Vehicle implements Serializable {
 
     public Car() {
         super();
-        setSeatingCapacity();
+        promptSeatingCapacity();
     }
 
     public int getSeatingCapacity() {
         return seatingCapacity;
     }
 
-    public void setSeatingCapacity() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter new seating capacity: ");
-        this.seatingCapacity = scanner.nextInt();
+    /** Prompts the user and assigns the seating capacity. */
+    public void promptSeatingCapacity() {
+        setSeatingCapacity(InputHelper.readInt("Enter new seating capacity: "));
+    }
+
+    /** Pure setter — assigns seating capacity without any I/O. */
+    public void setSeatingCapacity(int seatingCapacity) {
+        this.seatingCapacity = seatingCapacity;
     }
 
     @Override

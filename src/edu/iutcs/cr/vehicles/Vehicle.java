@@ -2,7 +2,6 @@ package edu.iutcs.cr.vehicles;
 
 import java.io.Serializable;
 import java.util.Objects;
-import java.util.Scanner;
 import edu.iutcs.cr.util.InputHelper;
 
 /**
@@ -19,11 +18,11 @@ public class Vehicle implements Serializable {
     private String registrationNumber;
 
     public Vehicle() {
-        setRegistrationNumber();
-        setMake();
-        setModel();
-        setYear();
-        setPrice();
+        promptRegistrationNumber();
+        promptMake();
+        promptModel();
+        promptYear();
+        promptPrice();
         this.available = true;
     }
 
@@ -35,42 +34,70 @@ public class Vehicle implements Serializable {
         return this.registrationNumber;
     }
 
-    public void setRegistrationNumber() {
-        this.registrationNumber = InputHelper.readNonBlank("Enter registration number: ", "Registration number is mandatory!");
+    /** Prompts the user and assigns the registration number. */
+    public void promptRegistrationNumber() {
+        setRegistrationNumber(InputHelper.readNonBlank("Enter registration number: ", "Registration number is mandatory!"));
+    }
+
+    /** Pure setter — assigns registration number without any I/O. */
+    public void setRegistrationNumber(String registrationNumber) {
+        this.registrationNumber = registrationNumber;
     }
 
     public String getMake() {
         return make;
     }
 
-    public void setMake() {
-        this.make = InputHelper.readNonBlank("Enter make: ", "Make is mandatory!");
+    /** Prompts the user and assigns the make. */
+    public void promptMake() {
+        setMake(InputHelper.readNonBlank("Enter make: ", "Make is mandatory!"));
+    }
+
+    /** Pure setter — assigns make without any I/O. */
+    public void setMake(String make) {
+        this.make = make;
     }
 
     public String getModel() {
         return model;
     }
 
-    public void setModel() {
-        this.model = InputHelper.readNonBlank("Enter model: ", "Model is mandatory!");
+    /** Prompts the user and assigns the model. */
+    public void promptModel() {
+        setModel(InputHelper.readNonBlank("Enter model: ", "Model is mandatory!"));
+    }
+
+    /** Pure setter — assigns model without any I/O. */
+    public void setModel(String model) {
+        this.model = model;
     }
 
     public String getYear() {
         return year;
     }
 
-    public void setYear() {
-        this.year = InputHelper.readNonBlank("Enter year: ", "Year is mandatory!");
+    /** Prompts the user and assigns the year. */
+    public void promptYear() {
+        setYear(InputHelper.readNonBlank("Enter year: ", "Year is mandatory!"));
+    }
+
+    /** Pure setter — assigns year without any I/O. */
+    public void setYear(String year) {
+        this.year = year;
     }
 
     public double getPrice() {
         return price;
     }
 
-    public void setPrice() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter price: ");
-        this.price = scanner.nextDouble();
+    /** Prompts the user and assigns the price. */
+    public void promptPrice() {
+        setPrice(InputHelper.readDouble("Enter price: "));
+    }
+
+    /** Pure setter — assigns price without any I/O. */
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public boolean isAvailable() {

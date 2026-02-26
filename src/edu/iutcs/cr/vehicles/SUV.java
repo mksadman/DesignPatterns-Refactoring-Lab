@@ -1,7 +1,7 @@
 package edu.iutcs.cr.vehicles;
 
 import java.io.Serializable;
-import java.util.Scanner;
+import edu.iutcs.cr.util.InputHelper;
 
 /**
  * @author Raian Rahman
@@ -14,7 +14,7 @@ public class SUV extends Vehicle implements Serializable {
     // Constructor
     public SUV() {
         super();
-        setOffRoad();
+        promptOffRoad();
     }
 
     // Getters and setters
@@ -22,10 +22,14 @@ public class SUV extends Vehicle implements Serializable {
         return isOffRoad;
     }
 
-    public void setOffRoad() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Is the SUV for off-road use? (true/false): ");
-        this.isOffRoad = scanner.nextBoolean();
+    /** Prompts the user and assigns the off-road flag. */
+    public void promptOffRoad() {
+        setOffRoad(InputHelper.readBoolean("Is the SUV for off-road use? (true/false): "));
+    }
+
+    /** Pure setter — assigns the off-road flag without any I/O. */
+    public void setOffRoad(boolean isOffRoad) {
+        this.isOffRoad = isOffRoad;
     }
 
     @Override

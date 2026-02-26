@@ -15,9 +15,9 @@ public class Person implements Serializable {
     private String email;
 
     public Person() {
-        setName();
-        setId();
-        setEmail();
+        promptName();
+        promptId();
+        promptEmail();
     }
 
     public Person(String id) {
@@ -28,24 +28,42 @@ public class Person implements Serializable {
         return name;
     }
 
-    public void setName() {
-        this.name = InputHelper.readNonBlank("Enter name: ", "Name is mandatory!");
+    /** Prompts the user and assigns the name. */
+    public void promptName() {
+        setName(InputHelper.readNonBlank("Enter name: ", "Name is mandatory!"));
+    }
+
+    /** Pure setter — assigns name without any I/O. */
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getId() {
         return id;
     }
 
-    public void setId() {
-        this.id = InputHelper.readNonBlank("Enter id: ", "Id is mandatory!");
+    /** Prompts the user and assigns the id. */
+    public void promptId() {
+        setId(InputHelper.readNonBlank("Enter id: ", "Id is mandatory!"));
+    }
+
+    /** Pure setter — assigns id without any I/O. */
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail() {
-        this.email = InputHelper.readNonBlank("Enter email: ", "Email is mandatory!");
+    /** Prompts the user and assigns the email. */
+    public void promptEmail() {
+        setEmail(InputHelper.readNonBlank("Enter email: ", "Email is mandatory!"));
+    }
+
+    /** Pure setter — assigns email without any I/O. */
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override

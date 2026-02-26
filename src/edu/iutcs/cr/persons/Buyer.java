@@ -1,7 +1,7 @@
 package edu.iutcs.cr.persons;
 
 import java.io.Serializable;
-import java.util.Scanner;
+import edu.iutcs.cr.util.InputHelper;
 
 /**
  * @author Raian Rahman
@@ -13,7 +13,7 @@ public class Buyer extends Person implements Serializable {
 
     public Buyer() {
         super();
-        setPaymentMethod();
+        promptPaymentMethod();
     }
 
     public Buyer(String id) {
@@ -24,10 +24,14 @@ public class Buyer extends Person implements Serializable {
         return paymentMethod;
     }
 
-    public void setPaymentMethod() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter new payment method:");
-        this.paymentMethod = scanner.nextLine();
+    /** Prompts the user and assigns the payment method. */
+    public void promptPaymentMethod() {
+        setPaymentMethod(InputHelper.readNonBlank("Enter new payment method: ", "Payment method is mandatory!"));
+    }
+
+    /** Pure setter — assigns payment method without any I/O. */
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
     }
 
     @Override

@@ -1,6 +1,6 @@
 package edu.iutcs.cr.vehicles;
 
-import java.util.Scanner;
+import edu.iutcs.cr.util.InputHelper;
 
 /**
  * @author Raian Rahman
@@ -12,17 +12,21 @@ public class Hatchback extends Vehicle {
 
     public Hatchback() {
         super();
-        setCompact();
+        promptCompact();
     }
 
     public boolean isCompact() {
         return isCompact;
     }
 
-    public void setCompact() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Is the hatchback compact? (true/false): ");
-        this.isCompact = scanner.nextBoolean();
+    /** Prompts the user and assigns the compact flag. */
+    public void promptCompact() {
+        setCompact(InputHelper.readBoolean("Is the hatchback compact? (true/false): "));
+    }
+
+    /** Pure setter — assigns the compact flag without any I/O. */
+    public void setCompact(boolean isCompact) {
+        this.isCompact = isCompact;
     }
 
     @Override

@@ -1,7 +1,7 @@
 package edu.iutcs.cr.vehicles;
 
 import java.io.Serializable;
-import java.util.Scanner;
+import edu.iutcs.cr.util.InputHelper;
 
 /**
  * @author Raian Rahman
@@ -14,7 +14,7 @@ public class Sedan extends Vehicle implements Serializable {
     // Constructor
     public Sedan() {
         super();
-        setHasSunroof();
+        promptHasSunroof();
     }
 
     // Getters and setters
@@ -22,11 +22,14 @@ public class Sedan extends Vehicle implements Serializable {
         return hasSunroof;
     }
 
-    public void setHasSunroof() {
-        // Taking input within the setter, which might lead to unexpected behavior
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Does the sedan have a sunroof? (true/false): ");
-        this.hasSunroof = scanner.nextBoolean();
+    /** Prompts the user and assigns the sunroof flag. */
+    public void promptHasSunroof() {
+        setHasSunroof(InputHelper.readBoolean("Does the sedan have a sunroof? (true/false): "));
+    }
+
+    /** Pure setter — assigns the sunroof flag without any I/O. */
+    public void setHasSunroof(boolean hasSunroof) {
+        this.hasSunroof = hasSunroof;
     }
 
     @Override
