@@ -10,6 +10,8 @@ import edu.iutcs.cr.util.InputHelper;
  */
 public class Vehicle implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     private String make;
     private String model;
     private String year;

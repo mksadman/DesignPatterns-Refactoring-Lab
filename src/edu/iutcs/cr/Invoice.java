@@ -13,6 +13,8 @@ import java.time.LocalDateTime;
  */
 public class Invoice implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     private final Buyer buyer;
     private final Seller seller;
     private final ShoppingCart shoppingCart;

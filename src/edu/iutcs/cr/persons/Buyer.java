@@ -1,13 +1,14 @@
 package edu.iutcs.cr.persons;
 
-import java.io.Serializable;
 import edu.iutcs.cr.util.InputHelper;
 
 /**
  * @author Raian Rahman
  * @since 4/18/2024
  */
-public class Buyer extends Person implements Serializable {
+public class Buyer extends Person {
+
+    private static final long serialVersionUID = 1L;
 
     private String paymentMethod;
 

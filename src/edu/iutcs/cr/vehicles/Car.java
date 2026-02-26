@@ -1,13 +1,14 @@
 package edu.iutcs.cr.vehicles;
 
-import java.io.Serializable;
 import edu.iutcs.cr.util.InputHelper;
 
 /**
  * @author Raian Rahman
  * @since 4/18/2024
  */
-public class Car extends Vehicle implements Serializable {
+public class Car extends Vehicle {
+
+    private static final long serialVersionUID = 1L;
 
     int seatingCapacity;
 

@@ -16,6 +16,8 @@ import static java.util.Objects.isNull;
  */
 public class ShoppingCart implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     private final Set<Vehicle> vehicles;
     private final SystemDatabase database;
 

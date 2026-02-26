@@ -1,13 +1,14 @@
 package edu.iutcs.cr.vehicles;
 
-import java.io.Serializable;
 import edu.iutcs.cr.util.InputHelper;
 
 /**
  * @author Raian Rahman
  * @since 4/19/2024
  */
-public class Sedan extends Vehicle implements Serializable {
+public class Sedan extends Vehicle {
+
+    private static final long serialVersionUID = 1L;
 
     private boolean hasSunroof;
 

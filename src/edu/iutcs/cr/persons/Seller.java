@@ -1,12 +1,12 @@
 package edu.iutcs.cr.persons;
 
-import java.io.Serializable;
-
 /**
  * @author Raian Rahman
  * @since 4/18/2024
  */
-public class Seller extends Person implements Serializable {
+public class Seller extends Person {
+
+    private static final long serialVersionUID = 1L;
 
     public Seller() {
         super();

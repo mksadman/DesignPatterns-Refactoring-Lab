@@ -1,13 +1,14 @@
 package edu.iutcs.cr.vehicles;
 
-import java.io.Serializable;
 import edu.iutcs.cr.util.InputHelper;
 
 /**
  * @author Raian Rahman
  * @since 4/19/2024
  */
-public class SUV extends Vehicle implements Serializable {
+public class SUV extends Vehicle {
+
+    private static final long serialVersionUID = 1L;
 
     private boolean isOffRoad;
 

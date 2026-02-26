@@ -16,6 +16,8 @@ import static java.util.Objects.isNull;
  */
 public class SystemDatabase implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     private Set<Buyer> buyers;
     private Set<Seller> sellers;
     private Set<Vehicle> vehicles;

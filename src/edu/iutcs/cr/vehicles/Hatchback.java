@@ -8,6 +8,8 @@ import edu.iutcs.cr.util.InputHelper;
  */
 public class Hatchback extends Vehicle {
 
+    private static final long serialVersionUID = 1L;
+
     private boolean isCompact;
 
     public Hatchback() {
